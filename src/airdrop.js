@@ -115,6 +115,5 @@ module.exports = async (snapshot, rewards) => {
           gasPrice: ethers.utils.parseUnits('150'),
       });
 
-      // TODO return address
-      return token;
+      return ethers.utils.getContractAddress(await signer.address(), nonce);
 }
