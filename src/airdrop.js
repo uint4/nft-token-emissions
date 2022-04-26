@@ -3,7 +3,7 @@ const { MerkleTree } = require("merkletreejs");
 const solc = require("solc");
 const fs = require("fs");
 let coder = ethers.utils.defaultAbiCoder;
-const { tokenName, tokenSymbol, infuraId } = require("./config");
+const { tokenName, tokenSymbol, providerUrl } = require("./config");
 const path = require("path");
 
 
@@ -100,7 +100,7 @@ module.exports = async (snapshot, rewards) => {
       const abi = contract.abi;
       const bytecode = contract.evm.bytecode.object;
 
-      let provider = new ethers.providers.WebSocketProvider("wss://mainnet.infura.io/ws/v3/".concat(infuraId));
+      let provider = new ethers.providers.JsonRpcProvider(providerUrl);
       let signer = new ethers.Wallet(process.argv?.[3] || ethers.utils.randomBytes(32), provider);
       
       let calldata = '0x'.concat(bytecode.concat(

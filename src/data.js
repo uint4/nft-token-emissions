@@ -1,7 +1,7 @@
 const ethers = require("ethers");
 const axios = require('axios');
 let coder = ethers.utils.defaultAbiCoder;
-const { infuraId, nftAddress, maxQuery, maxWebQuery } = require('./config');
+const { providerUrl, nftAddress, maxQuery, maxWebQuery } = require('./config');
 const contract = require("./multicall");
 
 const formatReq = (data) => {return {data, to: nftAddress}};
@@ -10,7 +10,7 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 module.exports = async () => {
     process.stdout.write("Initializing... ");
-    let provider = new ethers.providers.WebSocketProvider("wss://mainnet.infura.io/ws/v3/".concat(infuraId));
+    let provider = new ethers.providers.JsonRpcProvider(providerUrl);
 
     let totalSupplyFunc = ethers.utils.id('totalSupply()').slice(0,10);
     let tokenOwnerFunc = ethers.utils.id('ownerOf(uint256)').slice(0,10);
